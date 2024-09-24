@@ -1,0 +1,55 @@
+/**
+* Handler that will be called during the execution of a PostLogin flow.
+*
+* @param {Event} event - Details about the user and the context in which they are logging in.
+* @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
+*/
+exports.onExecutePostLogin = async (event, api) => {
+  const { Client } = require('pg');
+  const client = new Client({
+    connectionString: event.secrets.DB_URI
+  });
+  try {
+    // Connect to the database
+    await client.connect();
+    // Query the database to get user data by email
+    const res = await client.query('SELECT * FROM "Users" WHERE email = $1', [event.user.email]);
+
+    // Process the results
+    if (res.rows.length > 0) {
+      const userData = res.rows[0];
+      console.log(userData)
+      if(userData?.role){
+        api.accessToken.setCustomClaim("custom_check_role", userData?.roleId);
+        api.user.setAppMetadata('firstName', userData?.firstName ?? '');
+        api.user.setAppMetadata('lastName', userData?.lastName ?? '');
+        api.user.setAppMetadata('phoneNumber', userData?.phoneNumber ?? '');
+        api.user.setAppMetadata('NMLS', userData?.NMLS ?? '');
+        api.user.setAppMetadata('isOrganization', userData?.isOrganization ?? '');
+        api.user.setAppMetadata('organizationNMLS', userData?.organizationNMLS ?? '');
+        api.user.setAppMetadata('role', userData?.role ?? '');
+      }
+      api.user.setAppMetadata('isVerified', userData.isVerified === '1')
+      console.log(`User data for email ${event.user.email}:`, userData);
+      // You can add user data to the ID token or user profile if needed
+    } else {
+      console.log(`No user found with email ${event.user.email}`);
+    }
+  } catch (err) {
+    console.error('Database query error:', err);
+  } finally {
+    // Disconnect from the database
+    await client.end();
+  }
+};
+
+
+/**
+* Handler that will be invoked when this action is resuming after an external redirect. If your
+* onExecutePostLogin function does not perform a redirect, this function can be safely ignored.
+*
+* @param {Event} event - Details about the user and the context in which they are logging in.
+* @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
+*/
+// exports.onContinuePostLogin = async (event, api) => {
+// };

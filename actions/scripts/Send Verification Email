@@ -1,0 +1,80 @@
+/**
+* Handler that will be called during the execution of a PostLogin flow.
+*
+* @param {Event} event - Details about the user and the context in which they are logging in.
+* @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
+*/
+exports.onExecutePostLogin = async (event, api) => {
+  const ManagementClient = require('auth0').ManagementClient;
+  const management = new ManagementClient({
+    domain: event.secrets.domain,
+    clientId: event.secrets.clientId,
+    clientSecret: event.secrets.clientSecret
+  });
+
+  const isSocialLogin = event.user.identities.find(x => x.connection === 'google-oauth2')
+
+  // verification email automatically send by auth0 for first time user;
+  const isFirstTimeUser = event.stats.logins_count == 1
+
+  // I am slicing off the 'auth0|' prefix of the user_id here
+  const userIdWithoutAuth0 = event.user.user_id.slice(6);
+
+  const params = {
+    client_id: event.client.client_id,
+    user_id: event.user.user_id,
+    identity: {
+      // Passing the corrected user_id here
+      user_id: userIdWithoutAuth0,
+      provider: 'auth0'
+    }
+  };
+  const metaData = event.user.app_metadata;
+
+  const token = api.redirect.encodeToken({
+      expiresInSeconds: 300,
+      secret: event.secrets.myRedirectSecret,
+        payload: {
+          email: event.user.email,
+          loginCount: event.stats.logins_count,
+          user: event.user.identities,
+          connectionId: event.connection.id,
+          isNotVerified: !metaData?.isVerified,
+          isNotSocialLogin: event.connection.id !== 'google-oauth2',
+          isSocialLogin
+        }
+      })
+
+  
+
+  if(isFirstTimeUser && !(isSocialLogin) && !metaData.isVerified) {
+    api.redirect.sendUserTo(`${event.secrets.redirectAPI}`, {
+        query: { sessionToken: token, redirectUrl: `${event.request.query.redirect_uri}/verification-email`}
+    })
+    // api.redirect.sendUserTo(`${event.request.query.redirect_uri}/verification-email`, {
+    //     query: { session_token: token, redirectUri: `${event.request.query.redirect_uri}/verification-email`}
+    //   });
+  } else if (!metaData.isVerified && !isSocialLogin) {
+    management.jobs.verifyEmail(params, function (err) {
+      if (err) {
+        console.log(err)
+      }
+      
+       api.redirect.sendUserTo(`${event.secrets.redirectAPI}`, {
+        query: { sessionToken: token, redirectUrl: `${event.request.query.redirect_uri}/verification-email`}
+      })
+
+    });
+  }
+};
+
+
+/**
+* Handler that will be invoked when this action is resuming after an external redirect. If your
+* onExecutePostLogin function does not perform a redirect, this function can be safely ignored.
+*
+* @param {Event} event - Details about the user and the context in which they are logging in.
+* @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
+*/
+exports.onContinuePostLogin = async (event, api) => {
+};

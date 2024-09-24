@@ -1,0 +1,47 @@
+/**
+* Handler that will be called during the execution of a PreUserRegistration flow.
+*
+* @param {Event} event - Details about the context and user that is attempting to register.
+* @param {PreUserRegistrationAPI} api - Interface whose methods can be used to change the behavior of the signup.
+*/
+
+const restrictedDomains = [
+    'facebook.com',
+    'twitter.com',
+    'instagram.com',
+    'linkedin.com',
+    'snapchat.com',
+    'tiktok.com',
+    'pinterest.com',
+    'reddit.com',
+    'tumblr.com',
+    'whatsapp.com',
+    'youtube.com',
+    'vimeo.com',
+    'discord.com',
+    'wechat.com',
+    'qq.com',
+    'weibo.com',
+    'telegram.org',
+    'signal.org',
+    'yahoo.com',
+    'gmail.com',
+    'hotmail.com',
+    'outlook.com',
+    'aol.com',
+    'protonmail.com',
+    'icloud.com',
+    'yopmail.com'
+  ];
+
+exports.onExecutePreUserRegistration = async (event, api) => {
+  if(isEmailRestricted(event.user.email, restrictedDomains) && event.client.client_id === event.secrets.loanOfficerClientId) {
+    api.access.deny('no_signups_from_personal_emails', 'Email is not allowed to register.');
+  }
+
+};
+
+function isEmailRestricted(email, restrictedDomains) {
+    const domain = email.split('@')[1]?.toLowerCase();;
+    return restrictedDomains.includes(domain);
+  }
