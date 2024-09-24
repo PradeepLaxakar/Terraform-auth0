@@ -50,7 +50,7 @@ db_connection1-name = "PROJECT-Stage-DB"
 google-connection-name = "google-oauth2"
 # GOOGLE_CLIENT_ID       = "Passing from secrets"
 # GOOGLE_CLIENT_SECRET   = "Passing from secrets"
-allowed-audiences = [""] // client IDs of applications that are allowed to use the connection //
+allowed-audiences = [""]                 // client IDs of applications that are allowed to use the connection //
 scopes            = ["email", "profile"] // Permissions // Removing email and profile may break some part of the integration.
 
 // user-management -----------------------------------------------------------------
@@ -65,8 +65,8 @@ role3-description = "Admin of loan officers"
 
 
 // Branding ------------------------------------------------------
-# // custom_domain
-# custom-domain = "auth.miralabs-test.com"
+// custom_domain
+custom-domain = "auth.miralabs-test.com"
 
 // Universal_login
 logo-url = "https://i.ibb.co/py5dkgn/Screenshot-2024-01-09-at-1-08-20-PM.png"

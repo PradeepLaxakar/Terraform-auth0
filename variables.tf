@@ -183,8 +183,8 @@ variable "role3-description" {}
 
 
 // Branding ------------------------------------------------------
-# // Custom Domain
-# variable "custom-domain" {}
+// Custom Domain
+variable "custom-domain" {}
 
 
 // Universal_login

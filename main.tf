@@ -90,8 +90,8 @@ module "roles" {
 module "universal_login" {
   source = "./branding/universal_login"
 
-  # //custom domain
-  # custom-domain = var.custom-domain
+  // custom domain
+  custom-domain = var.custom-domain
 
   logo-url   = var.logo-url
   number0    = var.number0
