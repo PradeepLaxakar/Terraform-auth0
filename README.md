@@ -1,9 +1,7 @@
 # Auth0-terraform
 
 ---
-page_title: Quickstart
-description: |-
-  Quickly get started with the Auth0 Provider.
+Quickly get started with the Auth0 Provider.
 ---
 
 # Getting started
