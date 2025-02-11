@@ -1,1 +1,1 @@
-variable "db_connection1-name" {}
+variable "db1-name" {}

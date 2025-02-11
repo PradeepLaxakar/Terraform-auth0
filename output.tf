@@ -48,8 +48,8 @@ output "api1-scope4" {
 
 
 # // Authentication --------------------------
-# output "db_connection1-name" {
-#   value = module.authentication.db_connection1-name
+# output "db1-name" {
+#   value = module.authentication.db1-name
 # }
 
 

@@ -8,7 +8,7 @@ terraform {
 }
 
 
-#Application1 - Mira Consumer ----------------------------------------------
+#Application1 - Project Consumer ----------------------------------------------
 resource "auth0_client" "application1" {
   name                 = var.application1-name
   app_type             = var.application1-app-type
@@ -39,7 +39,7 @@ resource "auth0_client" "application1" {
 
 
   jwt_configuration {
-    lifetime_in_seconds = 36000
+    lifetime_in_seconds = var.application1-id-token-expiration #36000
     secret_encoded      = true
     alg                 = "RS256"
     scopes = {
@@ -49,18 +49,16 @@ resource "auth0_client" "application1" {
 
   refresh_token {
     leeway                       = 0
-    token_lifetime               = 2592000
+    token_lifetime               = var.application1-absolute-lifetime #2592000
     rotation_type                = "rotating"
     expiration_type              = "expiring"
     infinite_idle_token_lifetime = var.false
   }
 
-
-
 }
 
 
-#Application2 - Mira Loan Officer ----------------------------------------------
+#Application2 - Project Loan Officer ----------------------------------------------
 resource "auth0_client" "application2" {
   name                 = var.application2-name
   app_type             = var.application2-app-type
@@ -89,7 +87,7 @@ resource "auth0_client" "application2" {
   cross_origin_auth = var.true #Cross-Origin Authentication
 
   jwt_configuration {
-    lifetime_in_seconds = 36000
+    lifetime_in_seconds = var.application2-id-token-expiration #36000
     secret_encoded      = true
     alg                 = "RS256"
     scopes = {
@@ -99,7 +97,7 @@ resource "auth0_client" "application2" {
 
   refresh_token {
     leeway                       = 0
-    token_lifetime               = 2592000
+    token_lifetime               = var.application2-absolute-lifetime #2592000
     rotation_type                = "rotating"
     expiration_type              = "expiring"
     infinite_idle_token_lifetime = var.false

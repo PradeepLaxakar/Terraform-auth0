@@ -16,7 +16,7 @@ provider "auth0" {
 }
 
 /// This is an code of an Auth0 connection to DB. ///
-resource "auth0_connection" "db_connection1" {
+resource "auth0_connection" "db1" {
   name                 = "Example-DB-Connection"
   is_domain_connection = true
   strategy             = "auth0"

@@ -1,15 +1,15 @@
-resource "auth0_connection" "db_connection1" {
-  name                 = var.db_connection1-name
+resource "auth0_connection" "db1" {
+  name                 = var.db1-name
   is_domain_connection = true
   strategy             = "auth0"
 
   options {
     password_policy                = "excellent"
     brute_force_protection         = true
-    enabled_database_customization = true
+    enabled_database_customization = var.use-my-own-database #true 
     import_mode                    = false
-    requires_username              = false
-    disable_signup                 = false
+    requires_username              = var.db1-require-username #false
+    disable_signup                 = var.db1-disable-signup   # false
     custom_scripts = {
       login           = file("${path.module}/scripts/login.js")
       create          = file("${path.module}/scripts/create.js")
@@ -50,8 +50,8 @@ resource "auth0_connection" "db_connection1" {
 
     validation {
       username {
-        min = 3
-        max = 15
+        min = var.db1-username-length-min #3
+        max = var.db1-username-length-max #15
       }
     }
 

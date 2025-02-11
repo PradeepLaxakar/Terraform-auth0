@@ -21,7 +21,7 @@ resource "auth0_branding" "my_brand" {
     body = file("${path.module}/universal_login_body.html") # file("universal_login_body.html")
   }
 
-  # depends_on = [auth0_custom_domain.my_custom_domain]
+  depends_on = [auth0_custom_domain.my_custom_domain]
 
 }
 

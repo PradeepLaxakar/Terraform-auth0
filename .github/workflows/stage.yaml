@@ -1,0 +1,103 @@
+name: Test Auth0 Workflow
+on:
+    push:
+      branches: 
+        - development
+
+env:
+  # Auth0 Creds
+  AUTH0_DOMAIN: ${{ secrets.STAGE_AUTH0_DOMAIN }}
+  AUTH0_CLIENT_ID: ${{ secrets.STAGE_AUTH0_CLIENT_ID }}
+  AUTH0_CLIENT_SECRET: ${{ secrets.STAGE_AUTH0_CLIENT_SECRET }}
+        
+  # Azure Storage Account to store terraform backend
+  STORAGE_ACCOUNT_ACCESS_KEY: ${{ secrets.STORAGE_ACCOUNT_ACCESS_KEY }}
+
+  # Database connection string for custom database  
+  TF_VAR_DB_CONNECTION_STRING: ${{ secrets.STAGE_DB_CONNECTION_STRING }} 
+
+  # Social - Google creds
+  TF_VAR_GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID }}
+  TF_VAR_GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET }}
+
+  # Branding - Email-Provider
+  TF_VAR_AZURE_CS_CONNECTION_STRING: ${{ secrets.AZURE_CS_CONNECTION_STRING }}
+    
+  # Actions
+  TF_VAR_action2_secret3_value: ${{ secrets.ACTION2_SECRET3_VALUE }}
+  TF_VAR_action3_secret1_value: ${{ secrets.ACTION3_SECRET1_VALUE }}
+  TF_VAR_action6_secret2_value: ${{ secrets.ACTION6_SECRET2_VALUE }}
+  
+  
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init --var-file=stage.tfvars -backend-config="access_key=${{ secrets.STORAGE_ACCOUNT_ACCESS_KEY }}"
+        working-directory: ./
+       
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./
+
+      - name: Terraform Plan
+        run: terraform plan --var-file=stage.tfvars
+        working-directory: ./
+
+# manual intervention for terraform apply  -------------------------------------------------------------------
+
+  approve-terraform-apply:
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Manual Intervention
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ secrets.MANUAL_APPROVAL_TOKEN }}
+        approvers: PradeepLaxakar
+        minimum-approvals: 1
+        issue-title: Terraform Apply
+        issue-body: To apply changes type - "approve", "yes" to accept or "deny", "no" to reject.
+
+
+# terraform apply -----------------------------------------------------------------------
+
+  terraform-apply:
+    needs: approve-terraform-apply
+    runs-on: ubuntu-latest
+          
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init --var-file=stage.tfvars -backend-config="access_key=${{ secrets.STORAGE_ACCOUNT_ACCESS_KEY }}"
+        working-directory: ./
+       
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./
+
+      - name: Terraform Plan
+        run: terraform plan --var-file=stage.tfvars -out=tfplan
+        working-directory: ./
+
+      - name: Terraform Apply
+        run: terraform apply --auto-approve tfplan
+        working-directory: ./
+
+# End -----------------------------------------------

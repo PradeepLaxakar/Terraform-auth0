@@ -6,7 +6,7 @@
  */
 const LOAN_OFFICER_ROLE_ID = "rol_Vp7wm1UhdkmJXMm3";
 const CONSUMER_ROLE_ID = "rol_H0sE4gx0Hk6dQKAO";
-const MIRA_UAT_CLIENT_ID = "tdU3jHzxVMccYflANOUmkrsc9e9D13u3";
+const Project_UAT_CLIENT_ID = "tdU3jHzxVMccYflANOUmkrsc9e9D13u3";
 
 exports.onExecutePostLogin = async (event, api) => {
   if (event.authorization && event.authorization.roles) {
@@ -24,9 +24,9 @@ exports.onExecutePostLogin = async (event, api) => {
       const params = { id: userId };
       const clientId = event.request.query.client_id;
       const urlDomain =
-        clientId === MIRA_UAT_CLIENT_ID
-          ? "https://uat-api.miralabs.ai"
-          : "https://dev-api.miralabs.ai/";
+        clientId === Project_UAT_CLIENT_ID
+          ? "https://uat-api.project.com"
+          : "https://dev-api.project.com/";
       const url = `${urlDomain}/user/is_loan_officer/${userId.slice(6)}`;
       const options = {
         headers: {
@@ -38,7 +38,7 @@ exports.onExecutePostLogin = async (event, api) => {
       console.log(is_loan_officer.data);
       let data;
       let rolesToRemove;
-      if (clientId === MIRA_UAT_CLIENT_ID) {
+      if (clientId === Project_UAT_CLIENT_ID) {
         if (is_loan_officer.data === true) {
           data = { roles: [LOAN_OFFICER_ROLE_ID] };
         } else {

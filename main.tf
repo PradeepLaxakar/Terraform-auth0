@@ -14,6 +14,9 @@ module "applications" {
   application1-allowed-logout-urls   = var.application1-allowed-logout-urls
   application1-web-origins           = var.application1-web-origins
   application1-logo-uri              = var.application1-logo-uri
+  application1-id-token-expiration   = var.application1-id-token-expiration
+  application1-absolute-lifetime     = var.application1-absolute-lifetime
+
 
   // application2
   application2-name                  = var.application2-name
@@ -24,6 +27,9 @@ module "applications" {
   application2-allowed-logout-urls   = var.application2-allowed-logout-urls
   application2-web-origins           = var.application2-web-origins
   application2-logo-uri              = var.application2-logo-uri
+  application2-id-token-expiration   = var.application2-id-token-expiration
+  application2-absolute-lifetime     = var.application2-absolute-lifetime
+
 }
 
 
@@ -48,22 +54,30 @@ module "authentication" {
   source = "./authentication"
 
   // Database
-  db_connection1-name  = var.db_connection1-name
+  db1-name             = var.db1-name
   DB_CONNECTION_STRING = var.DB_CONNECTION_STRING
 
+  db1-require-username    = var.db1-require-username
+  db1-username-length-min = var.db1-username-length-min
+  db1-username-length-max = var.db1-username-length-max
+  db1-disable-signup      = var.db1-disable-signup
+  use-my-own-database     = var.use-my-own-database
+
   // Social
-  google-connection-name = var.google-connection-name
-  GOOGLE_CLIENT_ID       = var.GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET   = var.GOOGLE_CLIENT_SECRET
-  allowed-audiences      = var.allowed-audiences
-  scopes                 = var.scopes
+  social-platform                            = var.social-platform
+  google-connection-name                     = var.google-connection-name
+  GOOGLE_CLIENT_ID                           = var.GOOGLE_CLIENT_ID
+  GOOGLE_CLIENT_SECRET                       = var.GOOGLE_CLIENT_SECRET
+  allowed-audiences                          = var.allowed-audiences
+  scopes                                     = var.scopes
+  sync-user-profile-attributes-at-each-login = var.sync-user-profile-attributes-at-each-login
 }
 
 
 // user-management -------------------------------------------------------------------- //
 // module "users" {
 //   source              = "./user-management/users"
-//   db_connection1-name = module.database.db_connection1-name
+//   db1-name = module.database.db1-name
 // }
 
 
@@ -90,7 +104,7 @@ module "roles" {
 module "universal_login" {
   source = "./branding/universal_login"
 
-  // custom domain
+  //custom domain
   custom-domain = var.custom-domain
 
   logo-url   = var.logo-url
@@ -145,6 +159,8 @@ module "universal_login" {
 module "email" {
   // email-provider
   source                     = "./branding/email"
+  email-provider             = var.email-provider
+  use-my-own-email-provider  = var.use-my-own-email-provider
   default-from-address       = var.default-from-address
   AZURE_CS_CONNECTION_STRING = var.AZURE_CS_CONNECTION_STRING
 

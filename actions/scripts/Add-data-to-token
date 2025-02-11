@@ -20,7 +20,7 @@ exports.onExecutePostLogin = async (event, api) => {
     const phoneNumber = metaData?.phoneNumber || event.user?.user_metadata?.phoneNumber || event.user?.phone_number || "";
     const emailVerified = event.user?.is_Verified === "1" ? 1 : 0;
     const clientId = event.request.query.client_id;
-    const urlDomain = "https://uat-api.miralabs.ai"
+    const urlDomain = "https://uat-api.project.com"
     const alwaysOnboardingUserId = ALWAYS_ONBOARDING_USER_ID_UAT
     const role = metaData?.role;
     if (String(userId) === String(alwaysOnboardingUserId)) {

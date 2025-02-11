@@ -4,7 +4,7 @@
  * @param {Event} event - Details about the user and the context in which they are logging in.
  * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
  */
-const MIRA_UAT_CLIENT_ID = "tdU3jHzxVMccYflANOUmkrsc9e9D13u3";
+const Project_UAT_CLIENT_ID = "tdU3jHzxVMccYflANOUmkrsc9e9D13u3";
 const ALWAYS_ONBOARDING_USER_ID_DEV = "1";
 const ALWAYS_ONBOARDING_USER_ID_UAT = "4";
 
@@ -34,11 +34,11 @@ exports.onExecutePostLogin = async (event, api) => {
     const emailVerified = event.user?.is_Verified === "1" ? 1 : 0;
     const clientId = event.request.query.client_id;
     const urlDomain =
-      clientId === MIRA_UAT_CLIENT_ID
-        ? "https://uat-api.miralabs.ai"
-        : "https://dev-api.miralabs.ai";
+      clientId === Project_UAT_CLIENT_ID
+        ? "https://uat-api.project.com"
+        : "https://dev-api.project.com";
     const alwaysOnboardingUserId =
-      clientId === MIRA_UAT_CLIENT_ID
+      clientId === Project_UAT_CLIENT_ID
         ? ALWAYS_ONBOARDING_USER_ID_UAT
         : ALWAYS_ONBOARDING_USER_ID_DEV;
     const roleId = metaData?.roleId;

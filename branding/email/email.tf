@@ -9,8 +9,8 @@ terraform {
 
 // email provider Azure CS.
 resource "auth0_email_provider" "my_email_provider" {
-  name                 = "azure_cs"
-  enabled              = true
+  name                 = var.email-provider
+  enabled              = var.use-my-own-email-provider #true
   default_from_address = var.default-from-address
 
   credentials {

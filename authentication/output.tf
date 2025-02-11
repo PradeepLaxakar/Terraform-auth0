@@ -1,3 +1,3 @@
-output "db_connection1-name" {
-  value = auth0_connection.db_connection1.name
+output "db1-name" {
+  value = auth0_connection.db1.name
 }

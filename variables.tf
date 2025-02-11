@@ -105,6 +105,10 @@ variable "application1-web-origins" {
 
 variable "application1-logo-uri" {}
 
+variable "application1-id-token-expiration" {}
+
+variable "application1-absolute-lifetime" {}
+
 
 // Application2 
 variable "application2-name" {}
@@ -129,6 +133,9 @@ variable "application2-web-origins" {
 
 variable "application2-logo-uri" {}
 
+variable "application2-id-token-expiration" {}
+
+variable "application2-absolute-lifetime" {}
 
 // API ---------------------------------------------
 # variable api1-id {}
@@ -158,8 +165,14 @@ variable "api1-description4" {}
 
 // Authentication --------------------------------------
 // Database
-variable "db_connection1-name" {}
+variable "db1-name" {}
 variable "DB_CONNECTION_STRING" {}
+
+variable "db1-require-username" {}
+variable "db1-username-length-min" {}
+variable "db1-username-length-max" {}
+variable "db1-disable-signup" {}
+variable "use-my-own-database" {}
 
 // Social
 variable "google-connection-name" {}
@@ -167,6 +180,8 @@ variable "GOOGLE_CLIENT_ID" {}
 variable "GOOGLE_CLIENT_SECRET" {}
 variable "allowed-audiences" {}
 variable "scopes" {}
+variable "sync-user-profile-attributes-at-each-login" {}
+variable "social-platform" {}
 
 // user-management ------------------------------------
 // users
@@ -214,6 +229,8 @@ variable "success" {}
 // Email
 variable "default-from-address" {}
 variable "AZURE_CS_CONNECTION_STRING" {}
+variable "email-provider" {}
+variable "use-my-own-email-provider" {}
 
 // Email template
 variable "template-verification-email" {}

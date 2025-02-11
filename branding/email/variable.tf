@@ -1,7 +1,8 @@
 // Email provider
 variable "default-from-address" {}
-
 variable "AZURE_CS_CONNECTION_STRING" {}
+variable "email-provider" {}
+variable "use-my-own-email-provider" {}
 
 // Email template
 variable "template-verification-email" {}

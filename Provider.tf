@@ -1,5 +1,4 @@
-# // Uncomment this to use stage environment / Github pipeline //
-# // Not Required as provider is declared in each module. //
+// Not required as provider is defined in modules //
 # terraform {
 #   required_providers {
 #     auth0 = {
@@ -11,4 +10,4 @@
 
 # provider "auth0" {}
 
-# # ---------------------------
+// --------------------------- //

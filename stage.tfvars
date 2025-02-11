@@ -2,24 +2,28 @@
 custom-login-page-on = "true"
 
 // Application1
-application1-name                  = "PROJECT Consumer"
+application1-name                  = "Project Consumer"
 application1-app-type              = "spa"
 application1-logo-uri              = "https://i.ibb.co/py5dkgn/Screenshot-2024-01-09-at-1-08-20-PM.png"
-application1-login-uri             = "https://PROJECT-fe.azurewebsites.net/" # Application Login URI
-application1-allowed-callback-urls = ["https://PROJECT-uat-fe.azurewebsites.net/dashboard", "http://localhost:5173", "https://PROJECT-uat-fe.azurewebsites.net/", "http://localhost:5173/auth0-callback-v2", "https://PROJECT-uat-fe.azurewebsites.net/auth0-callback-v2"]
-application1-allowed-logout-urls   = ["http://localhost:5173", "https://PROJECT-uat-fe.azurewebsites.net/", "http://localhost:5173/verification-email"]
-application1-web-origins           = ["http://localhost:5173", "https://PROJECT-uat-fe.azurewebsites.net/"]
+application1-login-uri             = "https://project-fe.azurewebsites.net/" # Application Login URI
+application1-allowed-callback-urls = ["https://project-uat-fe.azurewebsites.net/dashboard", "http://localhost:5173", "https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/auth0-callback-v2", "https://project-uat-fe.azurewebsites.net/auth0-callback-v2"]
+application1-allowed-logout-urls   = ["http://localhost:5173", "https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/verification-email"]
+application1-web-origins           = ["http://localhost:5173", "https://project-uat-fe.azurewebsites.net/"]
 application1-allowed-origins       = [] # Cross-Origin_Authentication > Allowed Origins (CORS)
+application1-id-token-expiration   = "36000"
+application1-absolute-lifetime     = "2592000"
 
 // Application2
-application2-name                  = "PROJECT Loan Officer"
+application2-name                  = "Project Loan Officer"
 application2-app-type              = "spa"
 application2-logo-uri              = "https://i.ibb.co/py5dkgn/Screenshot-2024-02-09-at-2-08-20-PM.png"
-application2-login-uri             = "https://PROJECT-uat-fe.azurewebsites.net/" # Application Login URI
-application2-allowed-callback-urls = ["https://PROJECT-uat-fe.azurewebsites.net/", "http://localhost:5173/", "http://localhost:5173/auth0-callback", "https://PROJECT-uat-fe.azurewebsites.net/auth0-callback"]
-application2-allowed-logout-urls   = ["https://PROJECT-uat-fe.azurewebsites.net/", "http://localhost:5173/"]
-application2-web-origins           = ["https://PROJECT-uat-fe.azurewebsites.net/", "http://localhost:5173/"]
+application2-login-uri             = "https://project-uat-fe.azurewebsites.net/" # Application Login URI
+application2-allowed-callback-urls = ["https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/", "http://localhost:5173/auth0-callback", "https://project-uat-fe.azurewebsites.net/auth0-callback"]
+application2-allowed-logout-urls   = ["https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/"]
+application2-web-origins           = ["https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/"]
 application2-allowed-origins       = [] # Cross-Origin_Authentication > Allowed Origins (CORS)
+application2-id-token-expiration   = "36000"
+application2-absolute-lifetime     = "2592000"
 
 // api ---------------------------------------------------------------------------------
 api1-name          = "Auth0 User Api"
@@ -43,15 +47,24 @@ api1-description4 = "Get Reports"
 
 // Authentication -----------------------------------------------------------------
 // Database
-db_connection1-name = "PROJECT-Stage-DB"
 # DB_CONNECTION_STRING = "Passing from secrets"
 
 // Social
-google-connection-name = "google-oauth2"
 # GOOGLE_CLIENT_ID       = "Passing from secrets"
 # GOOGLE_CLIENT_SECRET   = "Passing from secrets"
-allowed-audiences = [""]                 // client IDs of applications that are allowed to use the connection //
-scopes            = ["email", "profile"] // Permissions // Removing email and profile may break some part of the integration.
+db1-name                                   = "Project-Stage-DB"
+social-platform                            = "google-oauth2"
+google-connection-name                     = "google-oauth2"
+allowed-audiences                          = [""]                 // client IDs of applications that are allowed to use the connection //
+scopes                                     = ["email", "profile"] // Permissions // Removing email and profile may break some part of the integration.
+sync-user-profile-attributes-at-each-login = "on_each_login"
+
+// Settings
+db1-require-username    = "false"
+db1-username-length-min = "3"
+db1-username-length-max = "15"
+db1-disable-signup      = "false"
+use-my-own-database     = "true"
 
 // user-management -----------------------------------------------------------------
 // roles
@@ -66,7 +79,7 @@ role3-description = "Admin of loan officers"
 
 // Branding ------------------------------------------------------
 // custom_domain
-custom-domain = "auth.miralabs-test.com"
+custom-domain = "auth.projects-test.com"
 
 // Universal_login
 logo-url = "https://i.ibb.co/py5dkgn/Screenshot-2024-01-09-at-1-08-20-PM.png"
@@ -103,15 +116,17 @@ page-background-background-color     = "#0056d6"
 
 
 // Email
-default-from-address       = "DoNotReply@miralabs.ai"
+email-provider             = "azure_cs"
+use-my-own-email-provider  = "true"
+default-from-address       = "DoNotReply@project.com"
 AZURE_CS_CONNECTION_STRING = "PassFromGithubSecret"
 
 // Email template
 template-verification-email    = "verify_email"
 status-enabled                 = true
-from                           = "DoNotReply@miralabs.ai"
-email-subject                  = "Welcome to PROJECT! Please Verify Your Email Address"
-redirect-to                    = "https://PROJECT-uat-fe.azurewebsites.net/result_page"
+from                           = "DoNotReply@project.com"
+email-subject                  = "Welcome to Project! Please Verify Your Email Address"
+redirect-to                    = "https://project-uat-fe.azurewebsites.net/result_page"
 url-lifetime-in-seconds-432000 = "432000"
 
 
@@ -149,14 +164,14 @@ action3-secret1-name          = "DB_URI"
 action4-name            = "Redirect Sign Up"
 action4-trigger         = "post-login"
 action4-trigger-version = "v3"
-action4-secret1-name    = "MY_REDIRECT_SECRET-to-be-Discuss-with-Nayan"
-action4_secret1_value   = "Passing from secrets" # to be discuss with Nayan
+action4-secret1-name    = "MY_REDIRECT_SECRET"
+action4_secret1_value   = "Passing from secrets"
 
 action5-name            = "Restrict Social Accounts User"
 action5-trigger         = "pre-user-registration"
 action5-trigger-version = "v2" // Trigger - https://registry.terraform.io/providers/auth0/auth0/latest/docs/guides/action_triggers //
-action5-secret1-name    = "loanOfficerClientId-to-be-Discuss-with-Nayan"
-action5_secret1_value   = "Passing from secrets" # to be discuss with Nayan
+action5-secret1-name    = "loanOfficerClientId"
+action5_secret1_value   = "Passing from secrets"
 
 action6-name                  = "Send Verification Email"
 action6-trigger               = "post-login"
@@ -168,7 +183,7 @@ action6-secret1-name  = "clientId"
 action6-secret1-value = "value"
 
 action6-secret2-name = "clientSecret"
-// action6_secret2_value         = "Passing from secrets" //
+// action6_secret2_value  = "Passing from secrets" //
 
 action6-secret3-name  = "domain"
 action6_secret3_value = "domain"

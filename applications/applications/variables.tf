@@ -22,6 +22,10 @@ variable "application1-web-origins" {}
 
 variable "application1-logo-uri" {}
 
+variable "application1-id-token-expiration" {}
+
+variable "application1-absolute-lifetime" {}
+
 // Application2 --------------------------------------------------
 variable "application2-name" {}
 
@@ -38,3 +42,7 @@ variable "application2-allowed-logout-urls" {}
 variable "application2-web-origins" {}
 
 variable "application2-logo-uri" {}
+
+variable "application2-id-token-expiration" {}
+
+variable "application2-absolute-lifetime" {}

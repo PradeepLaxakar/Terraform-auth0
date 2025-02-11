@@ -14,13 +14,13 @@ terraform {
 # ===================================================================================
 
 resource "auth0_user" "user" {
-  connection_name = var.db_connection1-name
+  connection_name = var.db1-name
   user_id         = "12345"
   #  username        = "tf_user"
   name           = "Terra Form"
   email          = "terra@form.com"
   email_verified = true
-  password       = "Techdome@12345"
+  password       = "Testpassword"
   #  picture         = "https://www.example.com/a-valid-picture-url.jpg"
 }
 
