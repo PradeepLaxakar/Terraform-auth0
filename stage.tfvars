@@ -4,7 +4,7 @@ custom-login-page-on = "true"
 // Application1
 application1-name                  = "Project Consumer"
 application1-app-type              = "spa"
-application1-logo-uri              = "https://i.ibb.co/py5dkgn/Screenshot-2024-01-09-at-1-08-20-PM.png"
+application1-logo-uri              = "https://website/path/Screenshot-2024-01-09-at-1-08-20-PM.png"
 application1-login-uri             = "https://project-fe.azurewebsites.net/" # Application Login URI
 application1-allowed-callback-urls = ["https://project-uat-fe.azurewebsites.net/dashboard", "http://localhost:5173", "https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/auth0-callback-v2", "https://project-uat-fe.azurewebsites.net/auth0-callback-v2"]
 application1-allowed-logout-urls   = ["http://localhost:5173", "https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/verification-email"]
@@ -16,7 +16,7 @@ application1-absolute-lifetime     = "2592000"
 // Application2
 application2-name                  = "Project Loan Officer"
 application2-app-type              = "spa"
-application2-logo-uri              = "https://i.ibb.co/py5dkgn/Screenshot-2024-02-09-at-2-08-20-PM.png"
+application2-logo-uri              = "https://website/path/Screenshot-2024-02-09-at-2-08-20-PM.png"
 application2-login-uri             = "https://project-uat-fe.azurewebsites.net/" # Application Login URI
 application2-allowed-callback-urls = ["https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/", "http://localhost:5173/auth0-callback", "https://project-uat-fe.azurewebsites.net/auth0-callback"]
 application2-allowed-logout-urls   = ["https://project-uat-fe.azurewebsites.net/", "http://localhost:5173/"]
@@ -82,7 +82,7 @@ role3-description = "Admin of loan officers"
 custom-domain = "auth.projects-test.com"
 
 // Universal_login
-logo-url = "https://i.ibb.co/py5dkgn/Screenshot-2024-01-09-at-1-08-20-PM.png"
+logo-url = "https://website/path/Screenshot-2024-01-09-at-1-08-20-PM.png"
 
 
 // Customizatiom theme
@@ -106,12 +106,12 @@ error                     = "#d03c38"
 success                   = "#13a688"
 # Captcha Widget Theme not available #Source - https://github.com/auth0/terraform-provider-auth0/issues/942
 
-widget-logo-url                      = "https://i.ibb.co/pLGqVgx/Group-21773.png"
+widget-logo-url                      = "https://website/pLGqVgx/Group-21773.png"
 font-url                             = ""
 links-style-normal                   = "normal"
 borders-buttons-style-pill           = "pill"
 borders-inputs-style-pill            = "pill"
-page-background-background-image-url = "https://i.ibb.co/sCHRTBf/Adobe-Stock-387175600-1.png"
+page-background-background-image-url = "https://website/sCHRTBf/image.png"
 page-background-background-color     = "#0056d6"
 
 
